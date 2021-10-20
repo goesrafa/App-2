@@ -7,7 +7,7 @@ import { Container,
          SignMessageButton,
          SignMessageButtonText,
          SignMessageButtonTextBold} from './styles'
-
+import { UserContext } from '../../contexts/UserContext';
 import SignIput from '../../components/SignIput';
 
 import Api from "../../Api";
@@ -18,7 +18,7 @@ import LockIcon from '../../assets/lock.svg'
 
 import Logo from '../../assets/logo.svg';
 export default () => {
-
+    const { dispatch: userDispatch } = useContext(UserContext)
     const navigation = useNavigation();
 
     const [userField, setUserField] = useState('');
@@ -30,7 +30,17 @@ export default () => {
         if(userField != '' && phoneField != '' && passwordField != '' ){
             let res = await Api.Cadastro(userField,phoneField,passwordField );
             if(res.token){  
-                alert("Deu certo!")
+                await AsyncStorage.setItem('token', res.token);
+                userDispatch({
+                    type: 'setAvatar',
+                    payload:{
+                        avatar: res.data.avatar
+                    }
+                });
+
+                navigation.reset({
+                    routes:[{name:'MainTab'}]
+                });
             } else{
                 alert ("Erro: " +res.error);
             }

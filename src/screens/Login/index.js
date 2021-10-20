@@ -23,26 +23,16 @@ export default () => {
     const { dispatch: userDispatch} = useContext(UserContext)
     const navigation = useNavigation();
 
-    const [userField, setUserField] = useState('rafaela');
-    const [passwordField, setPasswordField] = useState('1234');
+    const [userField, setUserField] = useState('');
+    const [passwordField, setPasswordField] = useState('');
 
 
     const handlerSignClick = async () => {
         if(userField !== '' && passwordField != ''){
 
             let json = await Api.Login(userField, passwordField);
-            console.log(json);
-
-            if(json.token){
-                await AsyncStorage.setItem('token', json.token);
-
-                userDispatch({
-                    type: 'setAvatar',
-                    payload:{
-                        avatar: json.data.avatar
-                    }
-                });
-
+           
+            if(json.data[0].token){
                 navigation.reset({
                     routes:[{name: 'MainTab'}]
                 })
@@ -51,11 +41,10 @@ export default () => {
                 alert("Nome e/ou senha incorretos!")
             }
 
-        }else {
+        } else {
             alert("Preencha todos os campos!")
-        }
+        } 
     }
-
     const handlerMessageButtonClick = () => { //ao clicar no botão o usuário será direcionado a tela de cadastro sem a possibilidade de volta
         navigation.reset({
             routes: [{name: 'Cadastro'}]

@@ -1,4 +1,4 @@
-const BASE_API = '';
+const BASE_API = 'http://10.0.2.2:8080';
 
 export default {
     checkToken:async (token) => {
@@ -6,7 +6,7 @@ export default {
             method: 'POST',
             headers: {
                 Accept: 'application/json',
-                'Content-Type': 'application/jason'
+                'Content-Type': 'application/json'
             },
             body: JSON.stringify({token})
         });
@@ -15,29 +15,29 @@ export default {
     },
     
     Login: async (user, password) => {
-        
         const req = await fetch(`${BASE_API}/auth/login`,{
             method: 'POST',
             headers: {
                 Accept: 'application/json',
-                'Content-Type': 'application/jason'
+                'Content-Type': 'application/json'
             },
-            body: JSON.stringify({user, password})
+            body: JSON.stringify({name: user, password: password})
         });
-        const json = await  req.json();
+        const json = await req.json();
+        
         return json;
     },
 
     Cadastro: async (nome, telefone, password) => {
         const req = await fetch(`${BASE_API}/user`,{
             method: 'POST',
-            header: {
+            headers: {
                 Accept: 'application/json',
-                'Content-Type': 'application/jason'
+                'Content-Type': 'application/json'
             },
-            body: JSON.stringify({nome, telefone, password})
+            body: JSON.stringify({name: nome, phone_number: telefone, password: password})
         });
-        const json = await  req.json();
+        const json = await req.json();
         return json;
     },
 }

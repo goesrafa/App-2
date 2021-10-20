@@ -6,6 +6,7 @@ const Stack = createStackNavigator();
 import Inicio from '../screens/Inicio'
 import Login from '../screens/Login'
 import Cadastro from '../screens/Cadastro'
+import MainTab from "./MainTab";
 
 export default () => (
     <Stack.Navigator 
@@ -17,5 +18,6 @@ export default () => (
         <Stack.Screen name="Inicio" component={Inicio}/>
         <Stack.Screen name="Login" component={Login}/>
         <Stack.Screen name="Cadastro" component={Cadastro}/>
+        <Stack.Screen name="MainTab" component={MainTab}/>
     </Stack.Navigator>
 )
